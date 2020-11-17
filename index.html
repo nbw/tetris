@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="src/style.css">
+    <title>OP-Z Tetris</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="src/img/favicon.png">
+  </head>
+  <body>
+    <div id="main" class="active">
+      <div class="tab small active" data-tab="0">
+        <h1>Hello.</h1>
+        <hr/>
+        <p>This is <b>OP-Z Tetris.</b></p>
+        <p>
+          You can play tetris with your computer keyboard or an <a href="https://teenage.engineering/products/op-z">OP-Z sequencer</a>.
+          <a href="">HERE</a> is a video.
+        </p>
+        <div class="button-party">
+          <button data-target="2">OPZ Setup</button>
+          <button data-target="1">Keyboard</button>
+          <img class="opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
+          <img class="opz" src="src/img/tetris.png" />
+        </div>
+      </div>
+      <div class="tab small" data-tab="1">
+        <h1>Keyboard</h1>
+        <hr/>
+        <p>↑ : Rotate (clockwise)</p>
+        <p>↓ : Down</p>
+        <p>← : Left</p>
+        <p>→ : Right</p>
+        <div class="button-party">
+          <button data-target="5">Got it</button>
+        </div>
+      </div>
+      <div class="tab small" data-tab="2">
+        <h1>OPZ Setup</h1>
+        <hr/>
+        <p>
+          First. Set up your OP-Z so that it's sending midi.
+        </p>
+        <p>
+          I use the iOS app (screenshot). Otherwise refer to Teenage Engineering's documentation.
+        </p>
+        </p>Goal: Make sure Midi send is ON.</p>
+        <div class="button-party">
+          <button data-target="3">Next</button>
+        </div>
+      </div>
+      <div class="tab small" data-tab="3">
+        <h1>OPZ Setup</h1>
+        <hr/>
+        <p>
+          Plug the OP-Z into your computer.
+        </p>
+        <p>
+          Turn it on.
+        </p>
+        <div class="button-party">
+          <button id="midi-connect" data-target="4">Check for midi device</button>
+        </div>
+        <p id="midi-error" class="error"></p>
+      </div>
+      <div class="tab small" data-tab="4">
+        <h1>Select device</h1>
+        <hr/>
+        <ol id="devices"></ol>
+      </div>
+      <div class="tab" style="margin-top: 0;" data-tab="5">
+        <div class="flex">
+          <div id="game">
+            <div id="game-buttons" class="active">
+              <button id="restart">Start</button>
+            </div>
+            <canvas id="tetris"></canvas>
+            <div id="panel">
+              <label>Level:</label><span id="level"></span>
+              </br>
+              <label>Score:</label><span id="score"></span>
+            </div>
+          </div>
+        </div>
+        <div id="controls">
+          <img class="opz" src="src/img/opz_white_controls_alt.svg" />
+        </div>
+        <div id="opz-settings">
+          <div id="opz-settings-toggle" class="title">
+            OP-Z Settings
+          </div>
+          <div id="opz-settings-settings">
+            <ul id="tracks"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="src/script.js"></script>
+  </body>
+</html>

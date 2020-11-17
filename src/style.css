@@ -1,0 +1,220 @@
+@font-face {
+  font-family: FreePixel;
+  src: url(fonts/FreePixel.ttf);
+}
+
+@font-face {
+  font-family: Retro-Computer;
+  src: url(fonts/Petyka-Retro-Computer.ttf);
+}
+
+html { 
+  font-size:62.5%;
+  height: 100%;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-family: FreePixel;
+  font-size: 1.9rem;
+  margin: auto;
+
+  color: #FFF;
+  background: #1D1D1D;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+a {
+  color: #FFF;
+}
+
+a:hover {
+  font-weight: 600;
+}
+
+h1,h2,h3,h4{ font-family: Retro-Computer; }
+
+button {
+  background-color: #FFF;
+  border: 2px solid #1D1D1D;
+  font-family: Retro-Computer;
+  transition: border-color 0.3s background-color 0.3s, color 0.25s;
+  text-align: center;
+  padding: 1rem;
+}
+
+button:hover {
+  background-color: #1D1D1D;
+  border-color: white;
+  color: white;
+}
+
+button:focus { outline: none; }
+
+canvas {
+  display: inline-block;
+  margin: auto;
+  border: solid #fff 2px;
+}
+
+.button-party {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.small {
+  width: 400px;
+}
+
+.tab.active {
+  display: block;
+  margin: auto;
+}
+
+.tab h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.tab button {
+  display: inline-block;
+  text-align: center;
+}
+
+#main {
+  height: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+
+.flex {
+  height: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+
+#devices {
+  text-align: center;
+  list-style-position: inside;
+  padding: 0;
+  margin: 2rem 0;
+}
+#devices li {
+  font-size: 3.5rem;
+}
+#devices li:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+p.error {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.opz {
+  max-width: 1000px;
+  width: 90%;
+  padding: 5%;
+  display: block;
+  margin: auto;
+  image-rendering: pixelated;
+}
+
+#game {
+  height: 74%;
+  padding: 1% auto 2% auto;
+  text-align: center;
+}
+
+#game-buttons.active {
+  display: block;
+}
+
+#game-buttons {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 40%;
+  left: 0;
+  text-align: center;
+}
+
+#game-buttons > * {
+  display: inline-block;
+}
+
+#controls .opz {
+  height: calc(20% - 1rem);
+  padding: 0;
+  padding-bottom: 5rem;
+}
+
+#panel {
+  margin: 0.5rem 2rem;
+  display: inline-block;
+  position: fixed;
+}
+
+#opz-settings {
+  margin: 1rem 4rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: none;
+}
+#opz-settings.active {
+  display: block;
+}
+
+#opz-settings .title {
+  text-align: center;
+  text-decoration: underline;
+}
+
+#opz-settings-settings {
+  display: none;
+}
+#opz-settings-settings.active {
+  display: block;
+}
+
+ul#tracks {
+  padding: 0;
+  list-style-type: none
+}
+
+#tracks > li {
+  margin: 1rem;
+  cursor: pointer;
+}
+
+#tracks > li > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#tracks .box {
+  width: 20px;
+  height: 20px;
+  border: solid 2px #FFF;
+  margin: auto 1rem;
+}
+
+#tracks .active .box {
+  background-color: #fde002;
+}
