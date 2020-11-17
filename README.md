@@ -2,7 +2,7 @@
 
 Implements Tetris and uses [OPZjs](github.com/nbw/opz) to receive input from the OP-Z.
 
-![opz](src/img/opz-basic.svg)
+![opz](/src/img/opz_basic.svg)
 
 ## Personal note about the code
 
