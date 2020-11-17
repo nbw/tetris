@@ -25,7 +25,6 @@ body {
   color: #FFF;
   background: #1D1D1D;
   height: 100%;
-  overflow-y: hidden;
 }
 
 a {
@@ -56,8 +55,8 @@ button:hover {
 button:focus { outline: none; }
 
 canvas {
+  margin: 2rem auto;
   display: inline-block;
-  margin: auto;
   border: solid #fff 2px;
 }
 
@@ -99,11 +98,9 @@ canvas {
 }
 
 .flex {
-  height: 100%;
-
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 #devices {
@@ -125,18 +122,23 @@ p.error {
   text-decoration: underline;
 }
 
-.opz {
+.tab-img {
   max-width: 1000px;
-  width: 90%;
+  max-height: 110px;
   padding: 5%;
   display: block;
-  margin: auto;
+  margin: 0 auto;
+}
+.tab-img.opz {
+  width: 90%;
+}
+.tab-img.tetris {
+  max-height: 100px;
   image-rendering: pixelated;
 }
 
 #game {
   height: 74%;
-  padding: 1% auto 2% auto;
   text-align: center;
 }
 
@@ -158,14 +160,20 @@ p.error {
   display: inline-block;
 }
 
+#controls {
+  width: 25%;
+}
 #controls .opz {
-  height: calc(20% - 1rem);
-  padding: 0;
-  padding-bottom: 5rem;
+  max-width: 1000px;
+  display: block;
+  margin: 0 auto;
+  max-height: 200px;
+
+  padding: 5%;
 }
 
 #panel {
-  margin: 0.5rem 2rem;
+  margin: 2rem 2rem;
   display: inline-block;
   position: fixed;
 }
@@ -177,6 +185,7 @@ p.error {
   right: 0;
   display: none;
 }
+
 #opz-settings.active {
   display: block;
 }

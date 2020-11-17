@@ -57,11 +57,13 @@ var opzSettings = {
 */
 
 var setupCanvas = function setupCanvas(canvas, width, height, containerId) {
-  var windowHeight = Math.floor(window.innerHeight * 0.76);
-  document.getElementById(containerId).style.height = "".concat(window.innerHeight * 0.76, "px");
+  var windowHeight = Math.floor(window.innerHeight * 0.75);
+  document.getElementById(containerId).style.height = "".concat(window.innerHeight * 0.78, "px");
   pixelSize = Math.floor(windowHeight / height);
   canvas.width = width * pixelSize;
   canvas.height = height * pixelSize;
+  var control = document.getElementById("controls").getElementsByTagName("img")[0];
+  control.style.height = "".concat(window.innerHeight * 0.20, "px");
 }; // Rendering loop
 
 
