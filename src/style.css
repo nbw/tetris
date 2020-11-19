@@ -227,3 +227,10 @@ ul#tracks {
 #tracks .active .box {
   background-color: #fde002;
 }
+
+#github {
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+}
