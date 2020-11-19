@@ -19,7 +19,7 @@
           <a href="">HERE</a> is a video.
         </p>
         <div class="button-party">
-          <button data-target="2">OPZ Setup</button>
+          <button id="opz-setup" data-target="2">OPZ Setup</button>
           <button data-target="1">Keyboard</button>
           <img class="tab-img opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
           <img class="tab-img tetris" src="src/img/tetris.png" />
@@ -45,7 +45,7 @@
         <p>
           I use the iOS app (screenshot). Otherwise refer to Teenage Engineering's documentation.
         </p>
-        </p>Goal: Make sure Midi send is ON.</p>
+        </p>Goal: Make sure midi send is ON.</p>
         <div class="button-party">
           <button data-target="3">Next</button>
         </div>
@@ -94,6 +94,22 @@
             <ul id="tracks"></ul>
           </div>
         </div>
+      </div>
+      <div id="unsupported" class="tab small" data-tab="6">
+        <h1>Midi Not Supported</h1>
+        <hr/>
+        <p>Unfortunately, the Web Midi API is not supported for all browsers.</p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility">Here's the compatibility list</a>.</p>
+        <p>Supported at the time of publishing:</p>
+        <ul>
+          <li>Chrome <- what I tested</li>
+          <li>Edge</li>
+          <li>Opera</li>
+        </ul>
+        <p>
+          I tried to add support using <a href="https://github.com/cwilso/WebMIDIAPIShim">this polyfill</a>. However,
+          was not successful. I welcome anyone to try and get it to work.
+        </p>
       </div>
     </div>
     <script src="src/script.js"></script>
