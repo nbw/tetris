@@ -1,5 +1,7 @@
 # Tetris (for OP-Z)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/78e5fcc6-04d0-4f41-a46c-b0002b727712/deploy-status)](https://app.netlify.com/sites/ecstatic-lamarr-0706a7/deploys)
+
 Implements Tetris and uses [OPZjs](github.com/nbw/opz) to receive input from the OP-Z.
 
 ![opz](/src/img/opz_basic.svg)

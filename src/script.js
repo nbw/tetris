@@ -34,6 +34,16 @@ var t = new _tetris.default(tetrisWidth, tetrisHeight, tetrisBaseClock, tetrisLe
 var canvas = document.getElementById("tetris");
 var ctx = canvas.getContext("2d");
 var midi = new _midi.default();
+/*
+ Web Midi API is NOT supported by a few common browers
+ */
+
+if (!midi.supported) {
+  var unsupported = document.getElementById("unsupported").getAttribute("data-tab");
+  var setupBtn = document.getElementById("opz-setup");
+  setupBtn.setAttribute('data-target', unsupported);
+}
+
 var midiDirections = [];
 var opzSettings = {
   "listen": (_listen = {
@@ -57,11 +67,13 @@ var opzSettings = {
 */
 
 var setupCanvas = function setupCanvas(canvas, width, height, containerId) {
-  var windowHeight = Math.floor(window.innerHeight * 0.76);
-  document.getElementById(containerId).style.height = "".concat(window.innerHeight * 0.76, "px");
+  var windowHeight = Math.floor(window.innerHeight * 0.75);
+  document.getElementById(containerId).style.height = "".concat(window.innerHeight * 0.78, "px");
   pixelSize = Math.floor(windowHeight / height);
   canvas.width = width * pixelSize;
   canvas.height = height * pixelSize;
+  var control = document.getElementById("controls").getElementsByTagName("img")[0];
+  control.style.height = "".concat(window.innerHeight * 0.20, "px");
 }; // Rendering loop
 
 
@@ -288,7 +300,7 @@ var midiConnect = function midiConnect(target) {
     } else {
       (0, _render.update)("midi-error", "Couldn't find any devices.");
     }
-  }, 50);
+  }, 250);
 };
 /*
   Setup OP-Z Settings menu

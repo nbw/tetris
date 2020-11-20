@@ -1,10 +1,32 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="src/style.css">
     <title>OP-Z Tetris</title>
     <link rel="icon" type="image/png" sizes="16x16" href="src/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="title" content="OP-Z Tetris">
+    <meta name="description" content="Class Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tetris.nathanwillson.com/">
+    <meta property="og:title" content="OP-Z Tetris">
+    <meta property="og:description" content="Class Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta property="og:image" content="src/img/banner.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tetris.nathanwillson.com/">
+    <meta property="twitter:title" content="OP-Z Tetris">
+    <meta property="twitter:description" content="Classic Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta property="twitter:image" content="">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </head>
   <body>
+    <div id="github">
+      <a class="github-button" href="https://github.com/nbw/opz" data-color-scheme="no-preference: dark; light: dark; dark: dark;" data-icon="octicon-star" data-size="large" aria-label="Star nbw/opz on GitHub">
+        Code
+      </a>
+    </div>
     <div id="main" class="active">
       <div class="tab small active" data-tab="0">
         <h1>Hello.</h1>
@@ -15,10 +37,10 @@
           <a href="">HERE</a> is a video.
         </p>
         <div class="button-party">
-          <button data-target="2">OPZ Setup</button>
+          <button id="opz-setup" data-target="2">OPZ Setup</button>
           <button data-target="1">Keyboard</button>
-          <img class="opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
-          <img class="opz" src="src/img/tetris.png" />
+          <img class="tab-img opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
+          <img class="tab-img tetris" src="src/img/tetris.png" />
         </div>
       </div>
       <div class="tab small" data-tab="1">
@@ -41,7 +63,7 @@
         <p>
           I use the iOS app (screenshot). Otherwise refer to Teenage Engineering's documentation.
         </p>
-        </p>Goal: Make sure Midi send is ON.</p>
+        </p>Goal: Make sure midi send is ON.</p>
         <div class="button-party">
           <button data-target="3">Next</button>
         </div>
@@ -90,6 +112,22 @@
             <ul id="tracks"></ul>
           </div>
         </div>
+      </div>
+      <div id="unsupported" class="tab small" data-tab="6">
+        <h1>Midi Not Supported</h1>
+        <hr/>
+        <p>Unfortunately, the Web Midi API is not supported for all browsers.</p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility">Here's the compatibility list</a>.</p>
+        <p>Supported at the time of publishing:</p>
+        <ul>
+          <li>Chrome <- what I tested</li>
+          <li>Edge</li>
+          <li>Opera</li>
+        </ul>
+        <p>
+          I tried to add support using <a href="https://github.com/cwilso/WebMIDIAPIShim">this polyfill</a>. However,
+          was not successful. I welcome anyone to try and get it to work.
+        </p>
       </div>
     </div>
     <script src="src/script.js"></script>
