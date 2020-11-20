@@ -2,22 +2,22 @@
 <html>
   <head>
     <link rel="stylesheet" href="src/style.css">
-    <title>OP-Z Tetris</title>
+    <title>MIDI Tetris</title>
     <link rel="icon" type="image/png" sizes="16x16" href="src/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <meta name="title" content="OP-Z Tetris">
-    <meta name="description" content="Class Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta name="title" content="MIDI Tetris">
+    <meta name="description" content="Classic Tetris with MIDI support (Teenage Engineering's OP-Z)">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tetris.nathanwillson.com/">
     <meta property="og:title" content="OP-Z Tetris">
-    <meta property="og:description" content="Class Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta property="og:description" content="Classic Tetris with MIDI support (Teenage Engineering's OP-Z)">
     <meta property="og:image" content="src/img/banner.png">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://tetris.nathanwillson.com/">
-    <meta property="twitter:title" content="OP-Z Tetris">
-    <meta property="twitter:description" content="Classic Tetris with MIDI support fo Teenage Engineering's OP-Z. ">
+    <meta property="twitter:title" content="MIDI Tetris">
+    <meta property="twitter:description" content="Classic Tetris with MIDI support (Teenage Engineering's OP-Z)">
     <meta property="twitter:image" content="">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </head>
@@ -31,13 +31,17 @@
       <div class="tab small active" data-tab="0">
         <h1>Hello.</h1>
         <hr/>
-        <p>This is <b>OP-Z Tetris.</b></p>
+        <p>This is <b>MIDI TETRIS</b>.</p>
         <p>
-          You can play tetris with your computer keyboard or an <a href="https://teenage.engineering/products/op-z">OP-Z sequencer</a>.
+          You can play TETRIS with a MIDI controller or a computer keyboard.
+        </p>
+
+        <p>
+          This project was made primarily to support <a href="https://teenage.engineering/products/op-z">Teenage Engineering's OP-Z</a>.
           <a href="">HERE</a> is a video.
         </p>
         <div class="button-party">
-          <button data-target="7">Midi Setup</button>
+          <button data-target="7">MIDI Setup</button>
           <button data-target="1">Keyboard</button>
           <img class="tab-img opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
           <img class="tab-img tetris" src="src/img/tetris.png" />
@@ -58,12 +62,12 @@
         <h1>OPZ Setup</h1>
         <hr/>
         <p>
-          First. Set up your OP-Z so that it's sending midi.
+          First. Set up your OP-Z so that it's sending MIDI.
         </p>
         <p>
           I use the iOS app. Otherwise refer to Teenage Engineering's documentation.
         </p>
-        </p>Goal: Make sure midi send is ON.</p>
+        </p>Goal: Make sure MIDI send is ON.</p>
         <div class="button-party">
           <button data-target="3">Next</button>
         </div>
@@ -130,15 +134,15 @@
         </p>
       </div>
       <div class="tab small" data-tab="7">
-        <h1>Midi Setup</h1>
+        <h1>MIDI Setup</h1>
         <hr/>
         <div class="button-party">
           <button id="opz-setup" data-target="2">OP-Z Setup</button>
-          <button data-target="8">Midi Setup</button>
+          <button data-target="8">MIDI Setup</button>
         </div>
       </div>
       <div class="tab small" data-tab="8">
-        <h1>Midi Setup</h1>
+        <h1>MIDI Setup</h1>
         <hr/>
         <p>
           Plug the device into your computer.
@@ -147,7 +151,7 @@
           Turn it on.
         </p>
         <div class="button-party">
-          <button id="midi-connect" data-target="4">Check for midi device</button>
+          <button id="midi-connect" data-target="4">Check for MIDI device</button>
         </div>
         <hr/>
         <p>F : Left</p>
