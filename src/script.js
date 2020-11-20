@@ -338,6 +338,7 @@ var midiConnect = function midiConnect(target, handler) {
 
       tabSwitch(target);
     } else {
+      (0, _render.update)("opz-midi-error", "Couldn't find any devices.");
       (0, _render.update)("midi-error", "Couldn't find any devices.");
     }
   }, 250);
