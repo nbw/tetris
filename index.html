@@ -37,7 +37,7 @@
           <a href="">HERE</a> is a video.
         </p>
         <div class="button-party">
-          <button id="opz-setup" data-target="2">OPZ Setup</button>
+          <button data-target="7">Midi Setup</button>
           <button data-target="1">Keyboard</button>
           <img class="tab-img opz" style="margin-top: 2rem;" src="src/img/opz_white.svg" />
           <img class="tab-img tetris" src="src/img/tetris.png" />
@@ -78,7 +78,7 @@
           Turn it on.
         </p>
         <div class="button-party">
-          <button id="midi-connect" data-target="4">Check for midi device</button>
+          <button id="opz-midi-connect" data-target="4">Check for OP-Z</button>
         </div>
         <p id="midi-error" class="error"></p>
       </div>
@@ -128,6 +128,34 @@
           I tried to add support using <a href="https://github.com/cwilso/WebMIDIAPIShim">this polyfill</a>. However,
           was not successful. I welcome anyone to try and get it to work.
         </p>
+      </div>
+      <div class="tab small" data-tab="7">
+        <h1>Midi Setup</h1>
+        <hr/>
+        <div class="button-party">
+          <button id="opz-setup" data-target="2">OP-Z Setup</button>
+          <button data-target="8">Midi Setup</button>
+        </div>
+      </div>
+      <div class="tab small" data-tab="8">
+        <h1>Midi Setup</h1>
+        <hr/>
+        <p>
+          Plug the device into your computer.
+        </p>
+        <p>
+          Turn it on.
+        </p>
+        <div class="button-party">
+          <button id="midi-connect" data-target="4">Check for midi device</button>
+        </div>
+        <hr/>
+        <p>F : Left</p>
+        <p>G : Down</p>
+        <p>A : Right</p>
+        <p>D : Rotate (counter-clockwise)</p>
+        <p>E : Rotate (clockwise)</p>
+        <p id="midi-error" class="error"></p>
       </div>
     </div>
     <script src="src/script.js"></script>

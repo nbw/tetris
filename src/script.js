@@ -141,25 +141,11 @@ var checkKey = function checkKey(e) {
 };
 
 document.onkeydown = throttle(keyThrottle, checkKey);
-
-var addToArray = function addToArray(array, value) {
-  if (array.indexOf(value) > -1) return;
-  array.push(value);
-  return array;
-};
-
-var removeFromArray = function removeFromArray(array, value) {
-  var index = array.indexOf(value);
-  if (index == -1) return;
-  array.splice(index, 1);
-  return array;
-};
 /*
-  Handle Midi Input
+  Handle OP-Z Midi Input
 */
 
-
-var midiHandler = function midiHandler(event) {
+var opzMidiHandler = function opzMidiHandler(event) {
   var data = _opzjs.default.decode(event.data);
 
   if (!opzSettings["listen"][data.track]) return;
@@ -193,17 +179,70 @@ var midiHandler = function midiHandler(event) {
         break;
     }
 
-    if (action) {
-      if (data.velocity > 0) {
-        // Simulate hold key
-        midiDirections[action] = setInterval(function () {
-          t.move(action);
-        }, midiThrottle);
-      } else {
-        var interval = midiDirections[action];
-        clearInterval(interval);
-      }
-    }
+    if (action) processAction(action, data.velocity);
+  }
+};
+/*
+  Handle Generic Midi Input
+*/
+
+
+var midiHandler = function midiHandler(event) {
+  var data = event.data;
+  if (data.length < 3) return;
+  var key = data[1] % 12;
+  var velocity = data[2];
+  var action = null;
+
+  switch (key) {
+    case 5:
+      // F
+      action = "left";
+      break;
+
+    case 7:
+      // G
+      action = "down";
+      break;
+
+    case 9:
+      // A
+      action = "right";
+      break;
+
+    case 2:
+      // D
+      if (velocity > 0) t.rotate("ccw");
+      break;
+
+    case 4:
+      // E
+      if (velocity > 0) t.rotate("cw");
+      break;
+
+    case 1:
+      // C#
+      if (t.gameOver) reset();
+      break;
+  }
+
+  if (action) processAction(action, velocity);
+};
+/*
+  Processes left, right, up, down
+
+  Uses setInterval to simulate holding a key
+*/
+
+
+var processAction = function processAction(action, velocity) {
+  if (velocity > 0) {
+    midiDirections[action] = setInterval(function () {
+      t.move(action);
+    }, midiThrottle);
+  } else {
+    var interval = midiDirections[action];
+    clearInterval(interval);
   }
 };
 /*
@@ -225,8 +264,11 @@ try {
 
     if (target) {
       button.addEventListener('click', function (event) {
-        if (event.target.id === "midi-connect") {
-          midiConnect(target);
+        if (event.target.id === "opz-midi-connect") {
+          midiConnect(target, opzMidiHandler);
+          opzSettingsSetup(opzSettings);
+        } else if (event.target.id === "midi-connect") {
+          midiConnect(target, midiHandler);
         } else {
           tabSwitch(target);
         }
@@ -274,7 +316,7 @@ var tabSwitch = function tabSwitch(target) {
 */
 
 
-var midiConnect = function midiConnect(target) {
+var midiConnect = function midiConnect(target, handler) {
   midi.setup();
   setTimeout(function () {
     if (midi.devices.length > 0) {
@@ -288,13 +330,12 @@ var midiConnect = function midiConnect(target) {
         item.addEventListener('click', function (event) {
           var deviceId = parseInt(event.target.getAttribute("data-device"));
           var targetId = event.target.getAttribute("data-target");
-          midi.selectDevice(deviceId, midiHandler);
+          midi.selectDevice(deviceId, handler);
           tabSwitch(targetId);
         });
         list.appendChild(item);
       }
 
-      opzSettingsSetup(opzSettings);
       tabSwitch(target);
     } else {
       (0, _render.update)("midi-error", "Couldn't find any devices.");
