@@ -40,7 +40,7 @@ var midi = new _midi.default();
 
 if (!midi.supported) {
   var unsupported = document.getElementById("unsupported").getAttribute("data-tab");
-  var setupBtn = document.getElementById("opz-setup");
+  var setupBtn = document.getElementById("midi-setup");
   setupBtn.setAttribute('data-target', unsupported);
 } // Keep track of which keys are pressed
 
