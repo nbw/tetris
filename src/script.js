@@ -125,7 +125,7 @@ var throttle = function throttle(delay, fn) {
 var checkKey = function checkKey(e) {
   e = e || window.event;
 
-  if (e.keyCode == '38') {
+  if (e.keyCode == '38' || e.keyCode == '32') {
     // up arrow
     t.rotate("cw");
   } else if (e.keyCode == '40') {
@@ -189,7 +189,6 @@ var opzMidiHandler = function opzMidiHandler(event) {
 
 var midiHandler = function midiHandler(event) {
   var data = event.data;
-  console.log(data);
   if (data.length < 3) return;
   var key = data[1] % 12;
   var velocity = data[2];
@@ -238,11 +237,13 @@ var midiHandler = function midiHandler(event) {
 
 var processAction = function processAction(action, velocity) {
   if (velocity > 0) {
+    if (midiDirections[action]) return;
     midiDirections[action] = setInterval(function () {
       t.move(action);
     }, midiThrottle);
   } else {
     var interval = midiDirections[action];
+    midiDirections[action] = null;
     clearInterval(interval);
   }
 };
