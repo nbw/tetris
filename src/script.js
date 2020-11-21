@@ -189,8 +189,8 @@ var opzMidiHandler = function opzMidiHandler(event) {
 
 var midiHandler = function midiHandler(event) {
   var data = event.data;
-  if (data.length < 3) return;
   console.log(data);
+  if (data.length < 3) return;
   var key = data[1] % 12;
   var velocity = data[2];
   var action = null;
