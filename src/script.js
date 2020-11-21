@@ -194,39 +194,59 @@ var midiHandler = function midiHandler(event) {
   var velocity = data[2];
   var action = null;
 
-  switch (key) {
-    case 5:
-      // F
-      action = "left";
-      break;
+  if (velocity > 0) {
+    switch (key) {
+      case 5:
+        // F
+        action = "left";
+        break;
 
-    case 7:
-      // G
-      action = "down";
-      break;
+      case 7:
+        // G
+        action = "down";
+        break;
 
-    case 9:
-      // A
-      action = "right";
-      break;
+      case 9:
+        // A
+        action = "right";
+        break;
 
-    case 2:
-      // D
-      if (velocity > 0) t.rotate("ccw");
-      break;
+      case 2:
+        // D
+        action = "ccw";
+        break;
 
-    case 4:
-      // E
-      if (velocity > 0) t.rotate("cw");
-      break;
+      case 4:
+        // E
+        action = "cw";
+        break;
 
-    case 1:
-      // C#
-      if (t.gameOver) reset();
-      break;
+      case 1:
+        // C#
+        if (t.gameOver) reset();
+        break;
+    }
+
+    if (action) {
+      // Throttle midi input
+      var prev = midiDirections[action] || 0;
+      var now = new Date().getTime();
+
+      if (now - prev > midiThrottle) {
+        switch (action) {
+          case "ccw":
+          case "cw":
+            t.rotate(action);
+            break;
+
+          default:
+            t.move(action);
+        }
+
+        midiDirections[action] = now;
+      }
+    }
   }
-
-  if (action) processAction(action, velocity);
 };
 /*
   Processes left, right, up, down
