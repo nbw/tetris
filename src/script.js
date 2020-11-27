@@ -141,8 +141,7 @@ var checkKey = function checkKey(e) {
   }
 };
 
-console.log("Keydown");
-document.onkeydown = throttle(keyThrottle, checkKey);
+document.addEventListener('keydown', throttle(keyThrottle, checkKey));
 /*
   Handle OP-Z Midi Input
 */
