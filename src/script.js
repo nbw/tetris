@@ -124,6 +124,7 @@ var throttle = function throttle(delay, fn) {
 
 var checkKey = function checkKey(e) {
   e = e || window.event;
+  console.log(e.keyCode);
 
   if (e.keyCode == '38' || e.keyCode == '32') {
     // up arrow
@@ -140,6 +141,7 @@ var checkKey = function checkKey(e) {
   }
 };
 
+console.log("Keydown");
 document.onkeydown = throttle(keyThrottle, checkKey);
 /*
   Handle OP-Z Midi Input
