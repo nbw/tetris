@@ -24,10 +24,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 var tetrisWidth = 10;
 var tetrisHeight = 20;
 var tetrisBaseClock = 750;
-var tetrisLevelUpRate = 0.2;
+var tetrisLevelUpRate = 0.15;
 var tetrisLevelUpCap = 5;
 var keyThrottle = 50;
-var midiThrottle = 150;
+var midiThrottle = 125;
 var pixelSize = 0;
 var fps = 20;
 var t = new _tetris.default(tetrisWidth, tetrisHeight, tetrisBaseClock, tetrisLevelUpCap, tetrisLevelUpRate);
@@ -40,11 +40,12 @@ var midi = new _midi.default();
 
 if (!midi.supported) {
   var unsupported = document.getElementById("unsupported").getAttribute("data-tab");
-  var setupBtn = document.getElementById("opz-setup");
+  var setupBtn = document.getElementById("midi-setup");
   setupBtn.setAttribute('data-target', unsupported);
-}
+} // Keep track of which keys are pressed
 
-var midiDirections = [];
+
+var midiDirections = {};
 var opzSettings = {
   "listen": (_listen = {
     "kick": true,
@@ -124,7 +125,7 @@ var throttle = function throttle(delay, fn) {
 var checkKey = function checkKey(e) {
   e = e || window.event;
 
-  if (e.keyCode == '38') {
+  if (e.keyCode == '38' || e.keyCode == '32') {
     // up arrow
     t.rotate("cw");
   } else if (e.keyCode == '40') {
@@ -140,71 +141,130 @@ var checkKey = function checkKey(e) {
 };
 
 document.onkeydown = throttle(keyThrottle, checkKey);
-
-var addToArray = function addToArray(array, value) {
-  if (array.indexOf(value) > -1) return;
-  array.push(value);
-  return array;
-};
-
-var removeFromArray = function removeFromArray(array, value) {
-  var index = array.indexOf(value);
-  if (index == -1) return;
-  array.splice(index, 1);
-  return array;
-};
 /*
-  Handle Midi Input
+  Handle OP-Z Midi Input
 */
 
-
-var midiHandler = function midiHandler(event) {
+var opzMidiHandler = function opzMidiHandler(event) {
   var data = _opzjs.default.decode(event.data);
 
   if (!opzSettings["listen"][data.track]) return;
 
   if (data.action === "keys") {
-    if (data.velocity > 0) {
-      switch (data.value.note) {
-        case "F":
-          addToArray(midiDirections, "left");
-          break;
+    var action = null;
 
-        case "G":
-          addToArray(midiDirections, "down");
-          break;
+    switch (data.value.note) {
+      case "F":
+        action = "left";
+        break;
 
-        case "A":
-          addToArray(midiDirections, "right");
-          break;
+      case "G":
+        action = "down";
+        break;
 
-        case "D":
-          t.rotate("ccw");
-          break;
+      case "A":
+        action = "right";
+        break;
 
-        case "E":
-          t.rotate("cw");
-          break;
+      case "D":
+        if (data.velocity > 0) t.rotate("ccw");
+        break;
 
-        case "C#":
-          if (t.gameOver) reset();
-          break;
-      }
-    } else {
-      switch (data.value.note) {
-        case "F":
-          removeFromArray(midiDirections, "left");
-          break;
+      case "E":
+        if (data.velocity > 0) t.rotate("cw");
+        break;
 
-        case "G":
-          removeFromArray(midiDirections, "down");
-          break;
+      case "C#":
+        if (t.gameOver) reset();
+        break;
+    }
 
-        case "A":
-          removeFromArray(midiDirections, "right");
-          break;
+    if (action) processAction(action, data.velocity);
+  }
+};
+/*
+  Handle Generic Midi Input
+*/
+
+
+var midiHandler = function midiHandler(event) {
+  var data = event.data;
+  if (data.length < 3) return;
+  var key = data[1] % 12;
+  var velocity = data[2];
+  var action = null;
+
+  if (velocity > 0) {
+    switch (key) {
+      case 5:
+        // F
+        action = "left";
+        break;
+
+      case 7:
+        // G
+        action = "down";
+        break;
+
+      case 9:
+        // A
+        action = "right";
+        break;
+
+      case 2:
+        // D
+        action = "ccw";
+        break;
+
+      case 4:
+        // E
+        action = "cw";
+        break;
+
+      case 1:
+        // C#
+        if (t.gameOver) reset();
+        break;
+    }
+
+    if (action) {
+      // Throttle midi input
+      var prev = midiDirections[action] || 0;
+      var now = new Date().getTime();
+
+      if (now - prev > midiThrottle) {
+        switch (action) {
+          case "ccw":
+          case "cw":
+            t.rotate(action);
+            break;
+
+          default:
+            t.move(action);
+        }
+
+        midiDirections[action] = now;
       }
     }
+  }
+};
+/*
+  Processes left, right, up, down
+
+  Uses setInterval to simulate holding a key
+*/
+
+
+var processAction = function processAction(action, velocity) {
+  if (velocity > 0) {
+    if (midiDirections[action]) return;
+    midiDirections[action] = setInterval(function () {
+      t.move(action);
+    }, midiThrottle);
+  } else {
+    var interval = midiDirections[action];
+    midiDirections[action] = null;
+    clearInterval(interval);
   }
 };
 /*
@@ -226,8 +286,11 @@ try {
 
     if (target) {
       button.addEventListener('click', function (event) {
-        if (event.target.id === "midi-connect") {
-          midiConnect(target);
+        if (event.target.id === "opz-midi-connect") {
+          midiConnect(target, opzMidiHandler);
+          opzSettingsSetup(opzSettings);
+        } else if (event.target.id === "midi-connect") {
+          midiConnect(target, midiHandler);
         } else {
           tabSwitch(target);
         }
@@ -275,7 +338,7 @@ var tabSwitch = function tabSwitch(target) {
 */
 
 
-var midiConnect = function midiConnect(target) {
+var midiConnect = function midiConnect(target, handler) {
   midi.setup();
   setTimeout(function () {
     if (midi.devices.length > 0) {
@@ -289,15 +352,15 @@ var midiConnect = function midiConnect(target) {
         item.addEventListener('click', function (event) {
           var deviceId = parseInt(event.target.getAttribute("data-device"));
           var targetId = event.target.getAttribute("data-target");
-          midi.selectDevice(deviceId, midiHandler);
+          midi.selectDevice(deviceId, handler);
           tabSwitch(targetId);
         });
         list.appendChild(item);
       }
 
-      midiSetup(midiDirections, midiThrottle, opzSettings);
       tabSwitch(target);
     } else {
+      (0, _render.update)("opz-midi-error", "Couldn't find any devices.");
       (0, _render.update)("midi-error", "Couldn't find any devices.");
     }
   }, 250);
@@ -315,9 +378,9 @@ var opzSettingsSetup = function opzSettingsSetup(settings) {
     var tracks = document.getElementById("tracks");
     var item = document.createElement('li');
     item.setAttribute('data-track', track);
-    item.classList.add('active');
+    (0, _render.toggle)(item, "active");
     var box = document.createElement('div');
-    box.classList.add('box');
+    (0, _render.toggle)(box, "box");
     var title = document.createElement('span');
     title.innerHTML = track;
     item.appendChild(box);
@@ -326,12 +389,10 @@ var opzSettingsSetup = function opzSettingsSetup(settings) {
       var target = event.target;
       if (target != item) target = target.parentNode;
       var track = target.getAttribute("data-track");
-      var setting = settings["listen"][track];
-      setting ? target.classList.remove("active") : target.classList.add("active");
+      (0, _render.toggle)(target, "active");
       settings["listen"][track] = !settings["listen"][track];
     });
     tracks.appendChild(item);
-    (0, _render.toggle)(settingsElement, "active");
   };
 
   for (var _i = 0, _Object$keys = Object.keys(settings["listen"]); _i < _Object$keys.length; _i++) {
@@ -339,24 +400,11 @@ var opzSettingsSetup = function opzSettingsSetup(settings) {
   }
 
   ;
+  (0, _render.toggle)(settingsElement, "active");
   document.getElementById("opz-settings-toggle").addEventListener("click", function (event) {
     var s = document.getElementById("opz-settings-settings");
     (0, _render.toggle)(s, "active");
   });
-};
-/*
- 1. Show midi settings menu
- 2. Start rendering loop for midi input
-*/
-
-
-var midiSetup = function midiSetup(directions, throttle, settings) {
-  opzSettingsSetup(settings);
-  setInterval(function () {
-    for (var i = 0; i < directions.length; i++) {
-      t.move(directions[i]);
-    }
-  }, throttle);
 };
 
 },{"./midi":2,"./render":3,"./tetris/tetris":8,"@babel/runtime/helpers/defineProperty":15,"@babel/runtime/helpers/interopRequireDefault":16,"opzjs":26}],2:[function(require,module,exports){
@@ -955,23 +1003,6 @@ var Tetris = /*#__PURE__*/function () {
       }
 
       return board;
-    }
-  }, {
-    key: "printFrame",
-    value: function printFrame() {
-      var frame = this.getFrame();
-      var grid = frame.grid;
-      var print = "";
-
-      for (var y = 0; y < frame.h; y++) {
-        for (var x = 0; x < frame.w; x++) {
-          print += " ".concat(frame.grid[y][x].value, " ");
-        }
-
-        print += "\n";
-      }
-
-      return print;
     }
   }, {
     key: "withinBounds",
