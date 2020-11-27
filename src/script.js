@@ -140,7 +140,7 @@ var checkKey = function checkKey(e) {
   }
 };
 
-document.onkeydown = throttle(keyThrottle, checkKey);
+document.addEventListener('keydown', throttle(keyThrottle, checkKey));
 /*
   Handle OP-Z Midi Input
 */
