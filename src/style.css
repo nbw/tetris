@@ -8,7 +8,7 @@
   src: url(fonts/Petyka-Retro-Computer.ttf);
 }
 
-html { 
+html {
   font-size:62.5%;
   height: 100%;
 }
@@ -64,6 +64,7 @@ canvas {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  padding-bottom: 2rem;
 }
 
 .tab {
@@ -125,7 +126,7 @@ p.error {
 .tab-img {
   max-width: 1000px;
   max-height: 110px;
-  padding: 5%;
+  padding: 0.5rem;
   display: block;
   margin: 0 auto;
 }
