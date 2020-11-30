@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/78e5fcc6-04d0-4f41-a46c-b0002b727712/deploy-status)](https://app.netlify.com/sites/ecstatic-lamarr-0706a7/deploys)
 
-Implements Tetris and uses [OPZjs](github.com/nbw/opz) to receive input from the OP-Z.
+Implements Tetris and uses [OPZjs](github.com/nbw/opz) to parse input from the OP-Z.
 
 ![opz](/src/img/opz_basic.svg)
 
@@ -44,3 +44,11 @@ If you want the Adobe Illustrator file contact me.
 Contributions are welcome, especially for bugs.
 
 For big design changes, fork the branch.
+
+## References
+
+### Fonts
+
+- FreePixel
+- Retro-Computer
+
