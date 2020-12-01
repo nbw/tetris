@@ -245,6 +245,7 @@ ul#tracks {
 @media screen and (max-width: 600px) {
   #main {
     flex-wrap: unset;
+    justify-content: start;
   }
 
   .desktop, .tab button.desktop {
