@@ -244,11 +244,12 @@ ul#tracks {
 
 @media screen and (max-width: 600px) {
   #main {
+    margin-top: 4rem;
     flex-wrap: unset;
     justify-content: start;
   }
 
-  .desktop, .tab button.desktop {
+  .desktop, .tab button.desktop, hr {
     display: none;
   }
 
