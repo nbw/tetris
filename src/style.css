@@ -25,6 +25,7 @@ body {
   color: #FFF;
   background: #1D1D1D;
   height: 100%;
+  margin: 0 2.5%;
 }
 
 a {
@@ -62,9 +63,10 @@ canvas {
 
 .button-party {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .tab {
@@ -72,7 +74,7 @@ canvas {
 }
 
 .tab.small {
-  width: 400px;
+  max-width: 400px;
 }
 
 .tab.active {
@@ -151,7 +153,7 @@ p.error {
   display: none;
   position: absolute;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   top: 40%;
   left: 0;
   text-align: center;
@@ -234,4 +236,24 @@ ul#tracks {
   left: 0;
   top: 0;
   padding: 1rem;
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  #main {
+    margin-top: 4rem;
+    flex-wrap: unset;
+    justify-content: start;
+  }
+
+  .desktop, .tab button.desktop, hr {
+    display: none;
+  }
+
+  #button-party .mobile {
+    display: inline-block
+  }
 }
