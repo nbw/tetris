@@ -238,7 +238,7 @@ ul#tracks {
   padding: 1rem;
 }
 
-.mobile {
+.mobile, .tab .mobile {
   display: none;
 }
 
@@ -253,7 +253,7 @@ ul#tracks {
     display: none;
   }
 
-  #button-party .mobile {
-    display: inline-block
+  .tab .mobile {
+    display: inline-block;
   }
 }
