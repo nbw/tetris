@@ -343,9 +343,9 @@ var midiConnect = function midiConnect(target, handler) {
   setTimeout(function () {
     if (midi.devices.length > 0) {
       var list = document.getElementById("devices");
-      var item = document.createElement('li');
 
       for (var i = 0; i < midi.devices.length; i++) {
+        var item = document.createElement('li');
         item.innerHTML = midi.devices[i].name;
         item.setAttribute('data-device', i);
         item.setAttribute('data-target', "5");
